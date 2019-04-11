@@ -115,8 +115,6 @@ tags:
 
 #### SideBar
 
-看右边:
-![](http://huangxuan.me/img/blog-sidebar.jpg)
 
 设置是在 `_config.yml`文件里面的`Sidebar settings`那块。
 ```
@@ -173,8 +171,6 @@ friends: [
 #### Keynote Layout
 
 HTML5幻灯片的排版：
-
-![](http://huangxuan.me/img/blog-keynote.jpg)
 
 这部分是用于占用html格式的幻灯片的，一般用到的是 Reveal.js, Impress.js, Slides, Prezi 等等.我认为一个现代化的博客怎么能少了放html幻灯的功能呢~
 
