@@ -12,7 +12,7 @@ tags:
 ---
 
 利用深度学习进行图像分类中需要进行模型的训练，模型训练中需要进行数据的预处理。分类结果的精度与数据的好坏有很大的关系。  
-下面将数据预处理中用到的函数或技巧都一一列出来。  
+下面将数据预处理中用到的函数列出来。  
 **1.numpy.rollaxis函数**  
 原型：numpy.rollaxis(arr, axis, start)  
 	• **arr**：输入数组  
@@ -70,6 +70,43 @@ print(sess.run(data))
 #   [6 6]]]
 
 ```
+**4.利用tifffile库进行读写tif影像**  
+
+**（1）影像的读写**  
+```
+>>> # numpy数组写入tif文件中
+>>> data = numpy.random.rand(4, 301, 219)
+>>> imsave('temp.tif', data, photometric='minisblack')
+
+>>> # 读取tif影像到numpy数组中
+>>> image = imread('temp.tif')
+>>> numpy.testing.assert_array_equal(image, data)
+
+```
+**（2）TiffWriter**  
+TiffWriter的主要目的是将n维numpy数组写入到TIFF中，而不是创建任何可能的TIFF格式，不支持JPEG压缩，SubIFDs，ExifIFD或GPSIFD标记
+```
+>>> # successively append images to BigTIFF file
+>>> data = numpy.random.rand(2, 5, 3, 301, 219)
+>>> with TiffWriter('temp.tif', bigtiff=True) as tif:
+...     for i in range(data.shape[0]):
+...         tif.save(data[i], compress=6, photometric='minisblack')
+# compress:取值0到9或者'LZMA','ZSTD'.从0到9的值控制zlib压缩的级别，默认为0表示不压缩。
+# photometric:图像数据的颜色空间,取值{'MINISBLACK', 'MINISWHITE', 'RGB', 'PALETTE', 'CFA'}
+``` 
+**（3）TiffFile**  
+从TIFF文件中读取图像和元数据  
+```
+>>> # read image array from TIFF file
+>>> imsave('temp.tif', numpy.random.rand(5, 301, 219))
+>>> with TiffFile('temp.tif') as tif:
+...     data = tif.asarray()
+>>> data.shape
+(5, 301, 219)
+```
+
+
+
 
 
 **持续更新中...**
