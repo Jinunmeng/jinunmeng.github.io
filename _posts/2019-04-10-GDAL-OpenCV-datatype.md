@@ -15,7 +15,7 @@ tags:
 
 在实际工作中会用到GDAL开源库进行影像读取，然后使用OpenCV中图像处理算法进行后续的处理，这过程涉及到的问题就是数据类型及数据格式转换。
 
-GDAL\OpenCV\C++中的常用数据类型对比：
+**1、GDAL\OpenCV\C++中的常用数据类型对比**  
 
 |**GDAL类型标识**|**OpenCV类型标识**|**C++中对应的类型**|**说明**|
 |GDT_Unknown|| |未知数据类型|
@@ -76,4 +76,46 @@ for (int i = nband - 1; i > 0; i--)
 Mat mergeMat;
 mergeMat.create(width, height, CV_16UC3);
 merge(allMat, mergeMat);
+```
+
+
+**2、OpenCV中type函数返回值与类型之间关系**  
+
+||C1|C2|C3|C4|
+|CV_8U|0|8|16|24|
+|CV_8S|1|9|17|25|
+|CV_16U|2|10|18|26|
+|CV_16S|3|11|19|27|
+|CV_32S|4|12|20|28|
+|CV_32F|5|13|21|29|
+|CV_64F|6|14|22|30|  
+
+其中C1, C2, C3, C4 指的是通道(Channel)数
+
+*3、Vec类的定义*
+```
+template<typename _Tp, int n> class Vec : public Matx<_Tp, n, 1> {...};
+
+typedef Vec<uchar, 2> Vec2b;
+typedef Vec<uchar, 3> Vec3b;
+typedef Vec<uchar, 4> Vec4b;
+
+typedef Vec<short, 2> Vec2s;
+typedef Vec<short, 3> Vec3s;
+typedef Vec<short, 4> Vec4s;
+
+typedef Vec<int, 2> Vec2i;
+typedef Vec<int, 3> Vec3i;
+typedef Vec<int, 4> Vec4i;
+
+typedef Vec<float, 2> Vec2f;
+typedef Vec<float, 3> Vec3f;
+typedef Vec<float, 4> Vec4f;
+typedef Vec<float, 6> Vec6f;
+
+typedef Vec<double, 2> Vec2d;
+typedef Vec<double, 3> Vec3d;
+
+typedef Vec<double, 4> Vec4d;
+typedef Vec<double, 6> Vec6d;
 ```
